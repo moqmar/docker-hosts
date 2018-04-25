@@ -1,0 +1,12 @@
+build: |
+  go build -ldflags="-s -w" -o docker-hosts main.go
+install: |
+  [ -x docker-hosts ] || run build || exit 1
+  
+  sudo=
+  which sudo >/dev/null && sudo=sudo
+  
+  $sudo cp docker-hosts /usr/local/bin/docker-hosts &&
+  $sudo cp docker-hosts.service /etc/systemd/system/docker-hosts.service &&
+  $sudo systemctl enable docker-hosts.service &&
+  $sudo systemctl start docker-hosts.service

@@ -1,0 +1,12 @@
+[Unit]
+Description=Docker Hosts
+After=syslog.target network.target
+Wants=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/docker-hosts
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
