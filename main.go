@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
+	"docker.io/go-docker/api/types"
+	"docker.io/go-docker"
 )
 
 var working = false
@@ -40,7 +40,7 @@ func ContainerToHosts(container types.Container, tld string) string {
 }
 
 // Update lists all Docker Containers and adds them to the hosts file.
-func Update(docker client.APIClient, file string, tld string, wait bool) {
+func Update(docker docker.APIClient, file string, tld string, wait bool) {
 	working = true
 	scheduleUpdate = false
 
@@ -89,7 +89,7 @@ func Update(docker client.APIClient, file string, tld string, wait bool) {
 }
 
 // Watch calls Update() automatically every time a container changes
-func Watch(docker client.APIClient, file string, tld string) {
+func Watch(docker docker.APIClient, file string, tld string) {
 	go Update(docker, file, tld, false)
 
 	msgChan, errChan := docker.Events(context.Background(), types.EventsOptions{})
@@ -120,7 +120,7 @@ func Watch(docker client.APIClient, file string, tld string) {
 }
 
 func main() {
-	docker, err := client.NewClientWithOpts(client.FromEnv)
+	docker, err := docker.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}

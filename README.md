@@ -10,7 +10,7 @@ Which network will be used for containers with multiple networks is undefined.
 
 ## Build and installation
 
-If [Go](https://golang.org/) and [run](https://github.com/moqmar/run) are installed, Docker Hosts can be installed simply by running `go get github.com/moqmar/docker-hosts && run -c $GOPATH/src/github.com/moqmar/docker-hosts install`
+If [Go](https://golang.org/), [dep](https://golang.github.io/dep/) and [run](https://github.com/moqmar/run) are installed, Docker Hosts can be installed simply by running `git clone github.com/moqmar/docker-hosts && cd docker-hosts && dep ensure && run install`.
 
 If you want to install the binary version, use the following instead:
 ```
