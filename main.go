@@ -25,13 +25,15 @@ func ContainerToHosts(container types.Container, tld string) string {
 	hosts := ""
 
 	for _, details := range container.NetworkSettings.Networks {
+		if details.IPAddress == "" {
+			continue
+		}
 		for _, name := range container.Names {
 			// <name>.docker
 			hosts += details.IPAddress + "\t" + strings.TrimPrefix(name, "/") + "." + tld + "\n"
 		}
 		// <id>.docker
 		hosts += details.IPAddress + "\t" + container.ID[:10] + "." + tld + "\n"
-		hosts += details.IPAddress + "\t" + container.ID + "." + tld + "\n"
 		hosts += "\n"
 		break // Only the first network
 	}
