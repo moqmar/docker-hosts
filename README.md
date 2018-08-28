@@ -1,12 +1,16 @@
 # Docker Hosts
 Update a `/etc/hosts`-style file to add docker containers to resolve locally on the host. The application will run until an error occurs and will watch for events from the docker daemon, keeping the file up to date.
 
-**Usage:** `docker-hosts [file=/etc/hosts] [tld=docker]`
+It will not remove existing host definitions from a file, so it can be safely used with `/etc/hosts` directly.
+
+**Usage:** `docker-hosts [/etc/hosts [docker]]`
+
+The first argument specifies the target file, the second argument specifies the TLD (`docker` by default, you might want to use an actual domain because someone registering the `docker` TLD might lead to some trouble).
 
 Each docker container will be added as `<container-name>.docker`, `<container-short-id>.docker`.  
-Which network will be used for containers with multiple networks is undefined.
+Which network will be used for containers with multiple networks is undefined behaviour.
 
-**Tip:** if you want to use this on a dedicated DNS server instead of using the hosts file, I suggest using [CoreDNS](https://coredns.io/) with the [hosts plugin](https://coredns.io/plugins/hosts/).
+**Tip:** if you want to use this on a dedicated DNS server instead of using the hosts file directly, I suggest using [CoreDNS](https://coredns.io/) with the [hosts plugin](https://coredns.io/plugins/hosts/).
 
 ## Build and installation
 
