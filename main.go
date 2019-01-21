@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"docker.io/go-docker/api/types"
 	"docker.io/go-docker"
+	"docker.io/go-docker/api/types"
 )
 
 var working = false
@@ -28,12 +28,13 @@ func ContainerToHosts(container types.Container, tld string) string {
 		if details.IPAddress == "" {
 			continue
 		}
+		hosts = details.IPAddress
 		for _, name := range container.Names {
 			// <name>.docker
-			hosts += details.IPAddress + "\t" + strings.TrimPrefix(name, "/") + "." + tld + "\n"
+			hosts += "\t" + strings.TrimPrefix(name, "/") + "." + tld
 		}
 		// <id>.docker
-		hosts += details.IPAddress + "\t" + container.ID[:10] + "." + tld + "\n"
+		hosts += "\t" + container.ID[:10] + "." + tld
 		hosts += "\n"
 		break // Only the first network
 	}
