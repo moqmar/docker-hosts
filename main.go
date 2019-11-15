@@ -29,8 +29,11 @@ func ContainerToHosts(container types.Container, tld string) string {
 			continue
 		}
 		// <docker-hosts.host>
-		if container.Labels["docker-hosts.host"] != "" {
-			hosts += "\t" + container.Labels["docker-hosts.host"]
+		if container.Labels["docker-hosts.hosts"] != "" {
+			names := strings.Split(container.Labels["docker-hosts.hosts"], ";")
+			for _, name := range names {
+				hosts += "\t" + strings.TrimPrefix(name, "/") + "." + tld
+			}
 		}
 		for _, name := range container.Names {
 			// <name>.docker
