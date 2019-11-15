@@ -10,6 +10,8 @@ The first argument specifies the target file, the second argument specifies the 
 Each docker container will be added as `<container-name>.docker`, `<container-short-id>.docker`.  
 Which network will be used for containers with multiple networks is undefined behaviour.
 
+You can also set additional names (seprated by `;`) via the label `docker-hosts.hosts`.
+
 **Tip:** if you want to use this on a dedicated DNS server instead of using the hosts file directly, I suggest using [CoreDNS](https://coredns.io/) with the [hosts plugin](https://coredns.io/plugins/hosts/).
 
 ## Build and installation
