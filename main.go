@@ -28,11 +28,6 @@ func ContainerToHosts(container types.Container, tld string) string {
 		if details.IPAddress == "" {
 			continue
 		}
-		// <ip>[:<docker-hosts.port>]
-		hosts = details.IPAddress
-		if container.Labels["docker-hosts.port"] != "" {
-			hosts += ":" + container.Labels["docker-hosts.port"]
-		}
 		// <docker-hosts.host>
 		if container.Labels["docker-hosts.host"] != "" {
 			hosts += "\t" + container.Labels["docker-hosts.host"]
