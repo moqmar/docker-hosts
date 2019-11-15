@@ -28,7 +28,15 @@ func ContainerToHosts(container types.Container, tld string) string {
 		if details.IPAddress == "" {
 			continue
 		}
+		// <ip>[:<docker-hosts.port>]
 		hosts = details.IPAddress
+		if container.Labels["docker-hosts.port"] != "" {
+			hosts += ":" + container.Labels["docker-hosts.port"]
+		}
+		// <docker-hosts.host>
+		if container.Labels["docker-hosts.host"] != "" {
+			hosts += "\t" + container.Labels["docker-hosts.host"]
+		}
 		for _, name := range container.Names {
 			// <name>.docker
 			hosts += "\t" + strings.TrimPrefix(name, "/") + "." + tld
@@ -128,10 +136,12 @@ func main() {
 		panic(err)
 	}
 
-	file := "/etc/hosts"
+	file := hostFile
 	if len(os.Args) > 1 {
 		file = os.Args[1]
 	}
+
+	fmt.Printf("Hostfile was selected as: %s\n", file)
 
 	tld := "docker"
 	if len(os.Args) > 2 {
